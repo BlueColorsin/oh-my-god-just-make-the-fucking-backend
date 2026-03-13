@@ -66,6 +66,8 @@ function atlas.fromSparrow(data, texture)
 		maxH=0,
 
 		tags = {},
+		hash = {},
+
 		texture = texture
 	}
 
@@ -107,6 +109,7 @@ function atlas.fromSparrow(data, texture)
 
 		if framehash[key] then
 			table_insert(tags[name], framehash[key])
+			frames.hash[frame.name] = framehash[key]
 			goto continue
 		end
 
@@ -115,6 +118,8 @@ function atlas.fromSparrow(data, texture)
 
 		table_insert(frames, {
 			__type = "frame",
+
+			name = name,
 
 			quad = quad,
 
@@ -134,6 +139,7 @@ function atlas.fromSparrow(data, texture)
 
 		frames.maxW = max(frames[#frames].w, frames.maxW)
 		frames.maxH = max(frames[#frames].h, frames.maxH)
+		frames.hash[frame.name] = frames[#frames]
 
 		::continue::
 	end
