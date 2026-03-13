@@ -4,3 +4,8 @@ love.filesystem.setRequirePath(
 	";source/?.lua;source/?/init.lua;"..
 	"libraries/?.lua;libraries/?/init.lua;"
 )
+
+---@type love.conf
+function love.conf(t)
+	t.window.resizable = true
+end

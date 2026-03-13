@@ -1,47 +1,52 @@
 local assets = require("assets")
+local camera = require("camera")
 
-local index = 1
+local defaultCamera
+local sprite
+local i_heart_boys
+local frameIndex = 1
 function love.load()
-	johnatlas = assets.atlas("BOYFRIEND")
-
+	sprite = assets.atlas("furblue")
+	i_heart_boys = assets.texture("I heart boys")
 end
 
 local timer = 0
 
--- function love.update(dt)
--- 	if timer >= 1/24 then
--- 		index = (index%(#johnatlas))+1
--- 		timer = 0
--- 	end
--- 	timer = timer + dt
--- end
+local get_time = love.timer.getTime
+function love.update(dt)
+	if timer >= 1/12 then
+		frameIndex = (frameIndex%#sprite)+1
+		timer = 0
+	end
+	timer = timer + dt
+
+	camera.default.ox = math.sin(get_time()*(math.pi/5)) * 100
+	camera.default.oy = math.tan(get_time()*(math.pi/5)) * 100
+end
 
 ---@type love.keypressed
 function love.keypressed(key)
-	if key == "right" then
-		index = (index%(#johnatlas))+1
-	elseif key == "left" then
-		index = (index%(#johnatlas))-1
-	end
 end
 
-local rad = math.rad
 function love.draw()
-	local frame = johnatlas[index]
-	local r = (frame.rotation == 4) and rad(270) or 0
+	camera.push()
 
-	local fx, fy = frame.ox, frame.oy
-	local x,y,sx,sy,ox,oy = 200,200,2,2,100,100
+	love.graphics.clear(.15,.15,.15)
 
-	local graphics = love.graphics
+	local cam = camera.default
+	love.graphics.setColor(.25,.25,.25)
+	love.graphics.rectangle("fill", -4000 - cam.ox, -4000 - cam.oy, 8000, 8000)
+	love.graphics.setColor(1,1,1,1)
 
-	---valid code I guess?
-	graphics.applyTransform(0, 0, 0, 1, 1, fx, fy)
-	graphics.rotate(r)
+	love.graphics.draw(i_heart_boys, 0, 0, 0, 1.5, 1.5)
 
-	---graphics.applyTransform(x+ox, y+oy, rad(angle), sx, sy, ox+fx, oy+fy)
-	---graphics.rotate(r)
+	local frame = sprite[frameIndex]
+	love.graphics.draw(frame.texture, frame.quad, -frame.ox - cam.ox*.5, -frame.oy - cam.oy*.5, math.rad(frame.rotation))
 
-	love.graphics.draw(johnatlas.texture, frame.quad)
+	camera.pop()
 end
 
+---@type love.resize
+function love.resize(h, w)
+	camera.letterbox(h, w)
+end
