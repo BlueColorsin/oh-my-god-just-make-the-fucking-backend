@@ -1,7 +1,5 @@
 local assets = require("assets")
 
-love.graphics.setPointSize(4)
-
 local graphics = love.graphics
 local rad = math.rad
 local function draw_frame(frame, camera, sfx, sfy)
@@ -45,14 +43,14 @@ return {
 	draw = function (self, camera)
 		local framehash = self.atlas.hash
 
-		draw_frame(framehash["bgWalls"], camera, .9, .9)
+		draw_frame(framehash["bgWalls"], camera, .9)
 
-		draw_frame(framehash["bgEscalator"], camera, .95, .95)
+		draw_frame(framehash["bgEscalator"], camera, .95)
 
 		draw_frame(framehash["fgSnow"], camera)
 
 		draw_frame(framehash["christmasTree"], camera)
 
-		draw_frame(self.atlas[self.santaIndices[self.santaIndex]], camera, 1.05, 1.05)
+		draw_frame(self.atlas[self.santaIndices[self.santaIndex]], camera, 1.05)
 	end
 }

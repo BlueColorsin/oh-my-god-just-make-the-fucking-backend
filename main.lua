@@ -13,9 +13,15 @@ function love.load()
 
 	sprite = assets.atlas("furblue")
 	i_heart_boys = assets.texture("I heart boys")
+
+	camera.default.oy = 500
+	-- camera.default.ox = 1000
+	
 end
 
 local timer = 0
+
+local target = 1
 
 local get_time = love.timer.getTime
 function love.update(dt)
@@ -25,16 +31,22 @@ function love.update(dt)
 	-- end
 	-- timer = timer + dt
 
-	camera.default.ox = math.sin(get_time()*(math.pi/5)) * 500
+	camera.default.ox = 500 + math.abs(math.sin(get_time()*(math.pi/10)) * 700)
+	camera.default.zoom = math.larp(target, camera.default.zoom, math.exp(-dt * 4));
 	-- camera.default.oy = math.tan(get_time()*(math.pi/5)) * 100
 
 	stage:update(dt)
-
-	camera.default.zoom = .25
+	-- camera.default.zoom = .25 + math.abs(math.sin(get_time()*(math.pi/20)))
 end
 
 ---@type love.keypressed
 function love.keypressed(key)
+end
+
+
+---@type love.wheelmoved
+function love.wheelmoved(x, y)
+	target = target + 0.1 * y
 end
 
 function love.draw()

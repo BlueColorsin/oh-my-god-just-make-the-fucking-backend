@@ -9,3 +9,9 @@ love.filesystem.setRequirePath(
 function love.conf(t)
 	t.window.resizable = true
 end
+
+function math.lerp(a, b, t)
+	return a + (b - a) * t
+end
+
+math.larp = math.lerp

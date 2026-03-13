@@ -68,9 +68,10 @@ function camera.push(self)
 	love.graphics.push()
 	love.graphics.translate(self.cx, self.cy)
 	love.graphics.setScissor(self.cx, self.cy, love.graphics.getWidth() - 2 * self.cx, love.graphics.getHeight() - 2 * self.cy)
-	love.graphics.scale(self.zoom * self.scale)
-	love.graphics.translate(self.ox, self.oy)
-	-- love.graphics.rotate(self.angle)
+	love.graphics.scale(self.scale)
+	love.graphics.translate(self.w/2, self.h/2)
+	love.graphics.scale(self.zoom)
+	love.graphics.translate(-self.w/2-self.ox, -self.h/2-self.oy)
 end
 
 function camera.pop(self)
