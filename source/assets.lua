@@ -1,6 +1,11 @@
 local atlas = require("atlas")
 local xml = require("xml")
 
+---todo:
+---mods ig
+---multi cache system
+---
+
 ---asset helper and cache system
 local assets = {
 	images = {},
@@ -12,6 +17,7 @@ function assets.get(path)
 end
 local get = assets.get
 
+setmetatable(assets, {__mode ="kv"})
 
 local new_texture = love.graphics.newTexture
 function assets.texture(path)
